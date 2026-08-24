@@ -39,6 +39,32 @@ def titulo(titulo: str, separado: bool = False,  tam: int = 40) -> None:
         print(f"{titulo.upper():^{tam}}")
         
     linha(tam)
+    
+# desenho.menu()
+# Procedimento que desenha um menu com indices (1 - tal tal tal...)
+# :param opcoes: Uma lista com as opções a serem desenhadas.
+# :param descricao: Uma descrição a ser desenhada em cima do menu.
+# :param sair: se vai ter a opção 0 de sair no menu.
+# :param espacamento: espaçamento entre as opções e o inicio da linha.
+# :return: Não retorna nada.
+def menu(opcoes: list,
+         descricao: str = "",
+         sair: bool = False,
+         espacamento: int= 4) -> None:
+    
+    print()
+    
+    if (descricao != ""):
+        print(f"{" "*(espacamento - 1)}{descricao}")
+        print()
+    
+    for i, opcao in enumerate(opcoes, start=1):    
+        print(f"{i:>{espacamento}} - {opcao}")
+    
+    if (sair == True):
+        print(f"{"0":>{espacamento}} - Sair")
+    
+    print()
 
 # -------------------- OUTROS --------------------
 
