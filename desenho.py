@@ -15,6 +15,9 @@
 
 import os
 import time
+# -------------------- GLOBAIS --------------------
+
+TAMANHO_LINHA_PADRAO = 58
 
 # -------------------- DESENHOS --------------------
 
@@ -22,7 +25,7 @@ import time
 # Procedimento que desenha uma linha no terminal
 # :param tam: Define o tamanho que a linha vai ser, por padrão 80 chars.
 # :return: Não retorna nada.
-def linha(tam: int = 40) -> None:
+def linha(tam: int = TAMANHO_LINHA_PADRAO) -> None:
     print("-" * tam)
 
 # desenho.titulo()
@@ -30,9 +33,9 @@ def linha(tam: int = 40) -> None:
 # :param titulo: É basicamente o texto que fica no título.
 # :param tam: Define o tamanho que o titulo vai ser, por padrão 80 chars.
 # :return: Não retorna nada.
-def titulo(titulo: str, descricao: str = "", separado: bool = False,  tam: int = 40) -> None:
+def titulo(titulo: str, descricao: str = "", separado: bool = False,  tam: int = TAMANHO_LINHA_PADRAO) -> None:
     linha(tam)
-    print()
+    
     if (separado == True):
         print(f"{separar(titulo).upper():^{tam}}")
     else:
@@ -40,7 +43,7 @@ def titulo(titulo: str, descricao: str = "", separado: bool = False,  tam: int =
 
     if (descricao != ""):
         print(f"{descricao:^{tam}}")
-    print()
+    
     linha(tam)
     
 # desenho.menu()
