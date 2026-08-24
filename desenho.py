@@ -30,14 +30,17 @@ def linha(tam: int = 40) -> None:
 # :param titulo: É basicamente o texto que fica no título.
 # :param tam: Define o tamanho que o titulo vai ser, por padrão 80 chars.
 # :return: Não retorna nada.
-def titulo(titulo: str, separado: bool = False,  tam: int = 40) -> None:
+def titulo(titulo: str, descricao: str = "", separado: bool = False,  tam: int = 40) -> None:
     linha(tam)
-    
+    print()
     if (separado == True):
         print(f"{separar(titulo).upper():^{tam}}")
     else:
         print(f"{titulo.upper():^{tam}}")
-        
+
+    if (descricao != ""):
+        print(f"{descricao:^{tam}}")
+    print()
     linha(tam)
     
 # desenho.menu()
