@@ -123,5 +123,50 @@ while (rodando == True):
     # ----- GERENCIANDO O SISTEMA -----
     elif (navegacao_atual == "gerenciando sistema"):
         desenho.limpar()
-        print("GERENCIAR: A SER IMPLEMENTADO!")
-        desenho.espera_entrada()
+        desenho.linha()
+        desenhar_logo()
+        desenho.linha()
+        print()
+        desenho.titulo("SISTEMA")
+        desenho.menu(
+            [
+                "Gerenciar Missões",
+                "Gerenciar Plantas",
+                "Gerenciar Loja",
+                "Resetar Jogador",
+                "Voltar"
+            ],
+            descricao="Escolha o que deseja fazer:",
+            sair=False
+        )
+        desenho.linha()
+        print()
+
+        escolha = input("Escolha: ")
+
+        match(escolha):
+            case "1":
+                while(True):
+                    desenho.limpar()
+                    desenho.linha()
+                    desenhar_logo()
+                    desenho.linha()
+                    print()
+                    desenho.titulo("SISTEMA")
+                    desenho.menu(
+                        [
+                            "Criar Missão",
+                            "Atualizar Missão",
+                            "Excluir Missão",
+                            "Voltar"
+                        ],
+                        descricao="Escolha o que deseja fazer:",
+                        sair=False
+                    )
+                    desenho.linha()
+                    print()
+                    desenho.espera_entrada()
+                    break
+            case _:
+                print("ERRO! Opção inválida!")
+                desenho.espera_entrada()
