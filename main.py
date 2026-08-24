@@ -28,6 +28,31 @@ def desenhar_logo() -> None:
  ------------------   ---------------------------------- 
                                                 - ARCEUS""")
 
+def desenhar_creditos() -> None:
+    print("""
+    Conheça o time ARCEUS:
+    
+    IGOR MATEUS DA SILVA
+    
+      - Github: https://github.com/HayanoIche
+      - Linkedin: https://www.linkedin.com/in/igor-mateus-da-silva-4b05013ba/
+    
+    MARCELA BATISTA TEIXEIRA
+    
+      - Github: https://github.com/wonbindasilva
+      - Linkedin: https://www.linkedin.com/in/marcelabteixeira/
+    
+    MATHEUS PEREIRA VIDAL
+    
+      - Github: https://github.com/pereirinh44
+      - Linkedin: https://linkedin.com/in/matheus-pereira-8700893b3
+    
+    FRANCO JARED MARQUINA
+    
+      - Github: https://github.com/Fmarquina
+      - Linkedin: https://www.linkedin.com/in/franco-jared-marquina-blas-b67851303/
+    """)
+
 # -------------------- PROGRAMA PRINCIPAL --------------------
 
 # ----- VARIÁVEIS DO PROGRAMA -----
@@ -83,30 +108,7 @@ while (rodando == True):
             case "3":
                 desenho.limpar()
                 desenho.titulo("CRÉDITOS", separado=True)
-                print("""
-Conheça o time ARCEUS:
-
-IGOR MATEUS DA SILVA
-
-  - Github: https://github.com/HayanoIche
-  - Linkedin: https://www.linkedin.com/in/igor-mateus-da-silva-4b05013ba/
-
-MARCELA BATISTA TEIXEIRA
-
-  - Github: https://github.com/wonbindasilva
-  - Linkedin: https://www.linkedin.com/in/marcelabteixeira/
-
-MATHEUS PEREIRA VIDAL
-
-  - Github: https://github.com/pereirinh44
-  - Linkedin: https://linkedin.com/in/matheus-pereira-8700893b3
-
-FRANCO JARED MARQUINA
-
-  - Github: https://github.com/Fmarquina
-  - Linkedin: https://www.linkedin.com/in/franco-jared-marquina-blas-b67851303/
-
-""")
+                desenhar_creditos()
                 desenho.espera_entrada()
             
             case _:
