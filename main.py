@@ -62,7 +62,7 @@ while (rodando == True):
             case "3":
                 desenho.limpar()
                 desenho.titulo("CRÉDITOS", separado=True)
-                desenhar_creditos()
+                menus.desenhar_creditos()
                 desenho.espera_entrada()
             
             case _:
