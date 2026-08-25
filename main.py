@@ -15,43 +15,8 @@ import os
 import time
 # Biblioteca de Desenhos no terminal
 import desenho
-
-# -------------------- FUNÇÕES DO PROGRAMA --------------------
-
-def desenhar_logo() -> None:
-    print("""     _-|                                                
-    |_-|                 ____               _           
-    / \   _ __ ___     / ___| __ _ _ __ __| | ___ _ __  
-   / _ \ | '__/ __|   | |  _ / _` | '__/ _` |/ _ \ '_ \ 
-  / ___ \| | | (__    | |_| | (_| | | | (_| |  __/ | | |
- /_/   \_\_|  \___|    \____|\__,_|_|  \__,_|\___|_| |_|
- ------------------   ---------------------------------- 
-                                                - ARCEUS""")
-
-def desenhar_creditos() -> None:
-    print("""
-    Conheça o time ARCEUS:
-    
-    IGOR MATEUS DA SILVA
-    
-      - Github: https://github.com/HayanoIche
-      - Linkedin: https://www.linkedin.com/in/igor-mateus-da-silva-4b05013ba/
-    
-    MARCELA BATISTA TEIXEIRA
-    
-      - Github: https://github.com/wonbindasilva
-      - Linkedin: https://www.linkedin.com/in/marcelabteixeira/
-    
-    MATHEUS PEREIRA VIDAL
-    
-      - Github: https://github.com/pereirinh44
-      - Linkedin: https://linkedin.com/in/matheus-pereira-8700893b3
-    
-    FRANCO JARED MARQUINA
-    
-      - Github: https://github.com/Fmarquina
-      - Linkedin: https://www.linkedin.com/in/franco-jared-marquina-blas-b67851303/
-    """)
+# Biblioteca dos Desenhos dos menus
+import menus
 
 # -------------------- PROGRAMA PRINCIPAL --------------------
 
@@ -75,18 +40,7 @@ jogador = {
 while (rodando == True):
     # ----- INICIO DO PROGRAMA -----
     if (navegacao_atual == "inicio"):
-        # ----- DESENHANDO AS OPÇÕES -----
-        desenho.limpar()
-        desenho.linha()
-        desenhar_logo()
-        desenho.linha()
-        desenho.menu(
-            ["Jogar","Gerenciar Sistema", "Créditos"],
-            descricao="Escolha o que deseja fazer:",
-            sair=True
-        )
-        desenho.linha()
-        print()
+        menus.desenhar_menu_inicial()
         
         # ----- ESCOLHENDO -----
         escolha = input("Escolha: ")
@@ -122,51 +76,28 @@ while (rodando == True):
         
     # ----- GERENCIANDO O SISTEMA -----
     elif (navegacao_atual == "gerenciando sistema"):
-        desenho.limpar()
-        desenho.linha()
-        desenhar_logo()
-        desenho.linha()
-        print()
-        desenho.titulo("SISTEMA")
-        desenho.menu(
-            [
-                "Gerenciar Missões",
-                "Gerenciar Plantas",
-                "Gerenciar Loja",
-                "Resetar Jogador",
-                "Voltar"
-            ],
-            descricao="Escolha o que deseja fazer:",
-            sair=False
-        )
-        desenho.linha()
-        print()
+        menus.desenhar_menu_gerenciador()
 
         escolha = input("Escolha: ")
 
         match(escolha):
             case "1":
                 while(True):
-                    desenho.limpar()
-                    desenho.linha()
-                    desenhar_logo()
-                    desenho.linha()
-                    print()
-                    desenho.titulo("SISTEMA")
-                    desenho.menu(
-                        [
-                            "Criar Missão",
-                            "Atualizar Missão",
-                            "Excluir Missão",
-                            "Voltar"
-                        ],
-                        descricao="Escolha o que deseja fazer:",
-                        sair=False
-                    )
-                    desenho.linha()
-                    print()
-                    desenho.espera_entrada()
-                    break
+                    menus.desenhar_menu_gerenciador_missoes()
+                    escolha = input("Escolha: ")
+
+                    match(escolha):
+                        case "4":
+                            break
+                        case _:
+                            print("ERRO! Opção inválida!")
+                            desenho.espera_entrada()
+                            
+            case "5":
+                navegacao_atual = "inicio"
+                continue
+            
             case _:
                 print("ERRO! Opção inválida!")
                 desenho.espera_entrada()
+
