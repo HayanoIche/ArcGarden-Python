@@ -109,3 +109,42 @@ def desenhar_menu_gerenciador_missoes() -> None:
     )
     desenho.linha()
     print()
+
+
+def desenhar_menu_gerenciador_plantas() -> None:
+    desenho.limpar()
+    desenho.linha()
+    desenhar_logo()
+    desenho.linha()
+    print()
+    desenho.titulo("SISTEMA")
+    desenho.menu(
+        [
+            "Criar Planta",
+            "Atualizar Planta",
+            "Excluir Planta",
+            "Voltar"
+        ],
+        descricao="Escolha o que deseja fazer:",
+        sair=False
+    )
+    desenho.linha()
+    print()
+
+def desenhar_menu_gerenciador_excluir_jogador() -> None:
+    desenho.limpar()
+    desenho.linha()
+    desenhar_logo()
+    desenho.linha()
+    print()
+    desenho.titulo("SISTEMA")
+    desenho.menu(
+        [
+            "Sim",
+            "Não",
+        ],
+        descricao="Deseja mesmo resetar o jogador local da maquina?",
+        sair=False
+    )
+    desenho.linha()
+    print()

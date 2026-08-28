@@ -30,12 +30,18 @@ navegacao_atual = "inicio"  # Em qual etapa do programa estamos
 plantas = list()    # Lista de todas as plantas
 missoes = list()    # Lista de todas as missões
 
-jogador = {
-    "username": "",
-    "nome jardim": "",
-    "arc score": 0,
-    "plantas": list()
-}
+def zerar_jogador() -> dict:
+    return {
+        "inicializado": False,
+        
+        "username": "bunderson",
+        "nome jardim": "",
+        "arc score": 0,
+        "plantas": list()
+    }
+
+jogador = zerar_jogador()
+    
 
 while (rodando == True):
     # ----- INICIO DO PROGRAMA -----
@@ -92,7 +98,40 @@ while (rodando == True):
                         case _:
                             print("ERRO! Opção inválida!")
                             desenho.espera_entrada()
-                            
+            
+            case "2":
+                while(True):
+                    menus.desenhar_menu_gerenciador_plantas()
+                    escolha = input("Escolha: ")
+
+                    match(escolha):
+                        case "4":
+                            break
+                        case _:
+                            print("ERRO! Opção inválida!")
+                            desenho.espera_entrada()
+            
+            case "4":
+                while(True):
+                    menus.desenhar_menu_gerenciador_excluir_jogador()
+                    escolha = input("Escolha: ")
+                    
+                    match(escolha):
+                        case "1":
+                            if (jogador["inicializado"] == True):
+                                print(f"\n\nJOGADOR {jogador["username"]} RESETADO!\n\n")
+                                jogador = zerar_jogador()
+                                desenho.espera_entrada()
+                            else:
+                                print(f"\n\nERRO! O JOGADOR AINDA NÃO FOI INICIALIZADO PARA SER RESETADO\n\n")
+                                desenho.espera_entrada()
+                            break
+                        case "2":
+                            break
+                        case _:
+                            print("ERRO! Opção inválida!")
+                            desenho.espera_entrada()
+                                        
             case "5":
                 navegacao_atual = "inicio"
                 continue
