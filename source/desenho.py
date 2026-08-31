@@ -15,6 +15,7 @@
 
 import os
 import time
+
 # -------------------- GLOBAIS --------------------
 
 TAMANHO_LINHA_PADRAO = 58

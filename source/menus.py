@@ -14,7 +14,7 @@
 # -------------------- IMPORTS --------------------
 
 # Biblioteca de Desenhos no terminal
-import desenho
+import desenho as desenho
 
 # -------------------- DESENHOS NO GERAL --------------------
 

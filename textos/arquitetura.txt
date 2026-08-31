@@ -1,0 +1,5 @@
+
+app.desenhar_menu("tal menu")
+
+plantas.adicionar()
+plantas.remover()
