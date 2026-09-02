@@ -23,25 +23,3 @@ while (app.rodando):
     
     elif (app.modo_execucao == "sistema"):
         app.rodar_menu_sistema()
-
-"""
-
-# ----- VARIÁVEIS DO JOGO -----
-
-plantas = list()    # Lista de todas as plantas
-missoes = list()    # Lista de todas as missões
-
-def zerar_jogador() -> dict:
-    return {
-        "inicializado": False,
-        
-        "username": "bunderson",
-        "nome jardim": "",
-        "arc score": 0,
-        "plantas": list()
-    }
-
-jogador = zerar_jogador()
-
-
-"""

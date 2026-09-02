@@ -11,18 +11,6 @@
 
 # -------------------- BIBLIOTECAS --------------------
 
-# -------------------- FUNÇÕES --------------------
+# -------------------- VARIÁVEIS DAS MISSÕES --------------------
 
-def zerar_jogador() -> dict:
-    return {
-        "inicializado": False,
-        
-        "username": "bunderson",
-        "nome jardim": "",
-        "arc score": 0,
-        "plantas": list()
-    }
-
-# -------------------- VARIÁVEIS --------------------
-
-atributos = zerar_jogador()
+lista_de_missoes = list()
