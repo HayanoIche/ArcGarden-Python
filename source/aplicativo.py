@@ -11,7 +11,7 @@
 
 # -------------------- BIBLIOTECAS --------------------
 
-import menus
+import menu
 from bibliotecas import desenho
 
 # -------------------- VARÍAVEIS DO APLICATIVO --------------------
@@ -37,7 +37,7 @@ def mudar_modo_execucao(modo: str):
 
 # ----- INICIO DO PROGRAMA -----
 def rodar_menu_escolha_modo_execucao():
-    menus.desenhar_menu_inicial()
+    menu.desenhar("Inicial")
     
     # ----- ESCOLHA -----
     escolha = input("Escolha: ")
@@ -57,7 +57,7 @@ def rodar_menu_escolha_modo_execucao():
 
         case "3":
             desenho.titulo("CRÉDITOS", separado=True)
-            menus.desenhar_creditos()
+            menu.desenhar_creditos()
             desenho.espera_entrada()
         
         case _:
@@ -71,8 +71,7 @@ def rodar_menu_jogador():
 
 # ----- MENU DO SISTEMA -----
 def rodar_menu_sistema():
-    menus.desenhar_menu_gerenciador()
-    
+    menu.desenhar("Gerenciador")
     escolha = input("Escolha: ")
     
     match(escolha):
@@ -97,7 +96,7 @@ def rodar_menu_sistema():
 # ----- MISSOES -----
 def rodar_menu_gerenciar_missoes():
     while(True):
-        menus.desenhar_menu_gerenciador_missoes()
+        menu.desenhar("Gerenciar Missão")
         escolha = input("Escolha: ")
 
         match(escolha):
@@ -110,9 +109,9 @@ def rodar_menu_gerenciar_missoes():
 # ----- PLANTAS -----
 def rodar_menu_gerenciar_plantas():
     while(True):
-        menus.desenhar_menu_gerenciador_plantas()
+        menu.desenhar("Gerenciar Plantas")
         escolha = input("Escolha: ")
-
+        
         match(escolha):
             case "4":
                 break
@@ -123,7 +122,7 @@ def rodar_menu_gerenciar_plantas():
 # ----- JOGADOR -----
 def rodar_menu_resetar_jogador():
     while(True):
-        menus.desenhar_menu_gerenciador_excluir_jogador()
+        menu.desenhar("Gerenciar Resetar Jogador")
         escolha = input("Escolha: ")
         
         match(escolha):
