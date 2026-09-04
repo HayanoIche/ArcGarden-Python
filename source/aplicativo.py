@@ -12,7 +12,7 @@
 # -------------------- BIBLIOTECAS --------------------
 
 import menus
-import desenho
+from bibliotecas import desenho
 
 # -------------------- VARÍAVEIS DO APLICATIVO --------------------
 
