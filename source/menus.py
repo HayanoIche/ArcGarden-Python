@@ -20,11 +20,11 @@ from bibliotecas import arquivos
 # -------------------- DESENHOS NO GERAL --------------------
 
 def desenhar_logo() -> None:
-    print(arquivos.ler_completo("./textos/logo.txt"))
-    print("                                                - ARCEUS""")
+    print(arquivos.pegar_conteudo("./textos/logo.txt"))
+    print("                                                - ARCEUS")
 
 def desenhar_creditos() -> None:
-    print(arquivos.ler_completo("./textos/creditos.txt"))
+    print(arquivos.pegar_conteudo("./textos/creditos.txt"))
 
 # -------------------- DESENHOS DOS MENUS --------------------
 
