@@ -11,8 +11,9 @@
 
 # -------------------- BIBLIOTECAS --------------------
 
-import menu
+import menu, plantas
 from bibliotecas import desenho
+import jogador
 
 # -------------------- VARÍAVEIS DO APLICATIVO --------------------
 
@@ -113,7 +114,15 @@ def rodar_menu_gerenciar_plantas():
         escolha = input("Escolha: ")
         
         match(escolha):
+            case "1":
+                plantas.criando()
+            case "2":
+                plantas.atualizando()
+            case "3":
+                plantas.excluindo()
             case "4":
+                plantas.listar()
+            case "5":
                 break
             case _:
                 print("ERRO! Opção inválida!")

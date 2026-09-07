@@ -17,7 +17,7 @@ def zerar_jogador() -> dict:
     return {
         "inicializado": False,
         
-        "username": "bunderson",
+        "username": "",
         "nome jardim": "",
         "arc score": 0,
         "plantas": list()

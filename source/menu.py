@@ -100,6 +100,7 @@ def desenhar(index: str) -> None:
                     "Criar Planta",
                     "Atualizar Planta",
                     "Excluir Planta",
+                    "Ver Plantas",
                     "Voltar"
                 ],
                 descricao="Escolha o que deseja fazer:",
@@ -107,6 +108,8 @@ def desenhar(index: str) -> None:
             )
             desenho.linha()
             print()
+
+            
 
         # Menu de resetar o jogador
         case "Gerenciar Resetar Jogador":
