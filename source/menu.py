@@ -79,6 +79,7 @@ def desenhar(index: str) -> None:
                     "Criar Missão",
                     "Atualizar Missão",
                     "Excluir Missão",
+                    "Ver Missões",
                     "Voltar"
                 ],
                 descricao="Escolha o que deseja fazer:",
@@ -129,3 +130,113 @@ def desenhar(index: str) -> None:
             )
             desenho.linha()
             print()
+
+
+        # Menu para mostrar os possiveis tipos de planta
+        case "Tipo da planta":
+            desenho.menu(
+                [
+                    "COMUM",
+                    "RARO",
+                    "ULTRA RARO"
+                ],
+                descricao="Escolhao tipo da planta: ",
+                sair=False
+            )
+
+        # Menu para mostrar as opçoes de edição das plantas
+        case "Editando planta":  
+            desenho.menu(
+                [
+                    "NOME",
+                    "TIPO",
+                    "XP ATUAL",
+                    "XP MÁXIMO",
+                    "DESCRIÇÃO",
+                    "VOLTAR"
+                ],
+                descricao="O QUE DESEJA ALTERAR: ",
+                sair=False
+            )
+        # Menu para mostrar as dificuldades possiveis das missões 
+        case "Dificuldade da missao":
+            desenho.menu(
+                [
+                    "FÁCIL",
+                    "MÉDIO",
+                    "DIFÍCIL",
+                    "ESPECIAL"
+                ],
+                descricao="Escolha a dificuldade da missão: ",
+                sair=False
+            )
+
+        # Menu para mostrar os possiveis tempos para concluir uma missão
+        case "Tipo de tempo":
+            desenho.menu(
+                [
+                    "DIA",
+                    "SEMANA",
+                    "MÊS"
+                ],
+                descricao="Escolha o tipo de tempo: ",
+                sair=False
+            )
+
+        case "Editando missão":
+            desenho.menu(
+                [
+                    "NOME",
+                    "DIFICULDADE",
+                    "PONTOS",
+                    "QUANTIDADE DE TEMPO",
+                    "TIPO DE TEMPO",
+                    "VOLTAR"
+                ],
+                descricao="Escolha o que deseja editar: ",
+                sair=False
+            )
+
+        case "Gerenciar Loja":
+            desenho.limpar()
+            desenho.linha()
+            desenhar_logo()
+            desenho.linha()
+            desenho.titulo("Gerenciar Pacotes")
+            desenho.menu(
+                [
+                    "Criar Pacote",
+                    "Atualizar Pacote",
+                    "Excluir Pacote",
+                    "Mostrar Pacotes",
+                    "Voltar"
+                ],
+                descricao="Escolha uma opção: ",
+                sair=False
+            )
+
+        case "Editando pacote":
+            desenho.menu(
+                [
+                    "NOME",
+                    "PREÇO",
+                    "ADICIONAR PLANTA",
+                    "REMOVER PLANTA",
+                    "VOLTAR"
+                ],
+                descricao="Escolha o que deseja editar: ",
+                sair=False
+            )
+
+        case "Adicionar Planta":
+            desenho.menu(
+        [
+            "PLANTA COMUM",
+            "PLANTA RARA",
+            "PLANTA ULTRA RARA",
+            "VOLTAR"
+        ],
+        descricao="Coloque plantas no pacote: ",
+        sair=False
+    )
+

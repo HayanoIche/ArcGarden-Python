@@ -11,7 +11,7 @@
 
 # -------------------- BIBLIOTECAS --------------------
 
-import menu, plantas
+import menu, plantas, missoes, loja
 from bibliotecas import desenho
 import jogador
 
@@ -60,7 +60,6 @@ def rodar_menu_escolha_modo_execucao():
             desenho.titulo("CRÉDITOS", separado=True)
             menu.desenhar_creditos()
             desenho.espera_entrada()
-        
         case _:
             print("ERRO! Opção inválida!")
             desenho.espera_entrada()
@@ -78,16 +77,15 @@ def rodar_menu_sistema():
     match(escolha):
         case "1":
             rodar_menu_gerenciar_missoes()
-            
         case "2":
             rodar_menu_gerenciar_plantas()
-        
+        case "3":
+            desenho.titulo("Loja", separado=True)
+            rodar_menu_gerenciar_loja()
         case "4":
-            rodar_menu_resetar_jogador()
-                                    
+            rodar_menu_resetar_jogador()                        
         case "5":
             mudar_modo_execucao("none")
-        
         case _:
             print("ERRO! Opção inválida!")
             desenho.espera_entrada()
@@ -96,18 +94,25 @@ def rodar_menu_sistema():
 
 # ----- MISSOES -----
 def rodar_menu_gerenciar_missoes():
-    while(True):
+    while True:
         menu.desenhar("Gerenciar Missão")
         escolha = input("Escolha: ")
 
-        match(escolha):
+        match escolha:
+            case "1":
+                missoes.criando()
+            case "2":
+                missoes.atualizando()
+            case "3":
+                missoes.excluindo()
             case "4":
+                missoes.listar()
+            case "5":
                 break
             case _:
                 print("ERRO! Opção inválida!")
                 desenho.espera_entrada()
 
-# ----- PLANTAS -----
 def rodar_menu_gerenciar_plantas():
     while(True):
         menu.desenhar("Gerenciar Plantas")
@@ -136,8 +141,8 @@ def rodar_menu_resetar_jogador():
         
         match(escolha):
             case "1":
-                if (jogador["inicializado"] == True):
-                    print(f"\n\nJOGADOR {jogador["username"]} RESETADO!\n\n")
+                if (jogador.atributos["inicializado"] == True):
+                    print(f"\n\nJOGADOR {jogador.atributos["username"]} RESETADO!\n\n")
                     #jogador = zerar_jogador()
                     desenho.espera_entrada()
                 else:
@@ -150,3 +155,24 @@ def rodar_menu_resetar_jogador():
                 print("ERRO! Opção inválida!")
                 desenho.espera_entrada()
 
+# ----- MENU DO SISTEMA -----
+# ----- MISSOES -----
+def rodar_menu_gerenciar_loja():
+    while True:
+        menu.desenhar("Gerenciar Loja")
+        escolha = input("Escolha: ")
+
+        match escolha:
+            case "1":
+                loja.criando()
+            case "2":
+                loja.atualizando()
+            case "3":
+                loja.excluindo()
+            case "4":
+                loja.listar()
+            case "5":
+                break
+            case _:
+                print("ERRO! OPÇÃO INVÁLIDA!")
+                desenho.espera_entrada()
