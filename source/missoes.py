@@ -15,7 +15,6 @@ from bibliotecas import desenho, entrada
 
 # -------------------- VARIÁVEIS DAS MISSÕES --------------------
 
-# Lista das missões pré-cadastradas no sistema
 lista_de_missoes = [
     {
         "nome": "BANHO CURTO (ATÉ 5 MIN)",
@@ -50,122 +49,164 @@ lista_de_missoes = [
 # -------------------- FUNÇÕES DE CRUD --------------------
 
 # missoes.adicionar()
-# Procedimento que adiciona uma nova missão na lista global
-# param missao_nome: Nome da missão
-# param missao_dificuldade: Grau de dificuldade (FÁCIL, MÉDIO, DIFÍCIL, ESPECIAL)
-# param missao_pts: Pontuação fornecida ao concluir a missão
-# param missao_tempo_qtd: Quantidade limite de vezes que pode ser feita
-# param missao_tempo: Unidade de tempo da limitação (DIA, SEMANA, MÊS)
+# Procedimento que adiciona uma nova missão na lista
+# param: l Lista de missões
+# param: n Nome da missão
+# param: d Grau de dificuldade (FÁCIL, MÉDIO, DIFÍCIL, ESPECIAL)
+# param: p Pontuação fornecida ao concluir a missão
+# param: t_q Quantidade limite de vezes que pode ser feita
+# param: t Unidade de tempo da limitação (DIA, SEMANA, MÊS)
 # return: Retorna True após adicionar com sucesso
-def adicionar(missao_nome: str, missao_dificuldade: str, missao_pts: int, missao_tempo_qtd: int, missao_tempo: str) -> bool:
-    lista_de_missoes.append(
-        {
-            "nome": missao_nome,
-            "dificuldade": missao_dificuldade,
-            "pts": missao_pts,
-            "tempo_qtd": missao_tempo_qtd,
-            "tempo": missao_tempo
+def adicionar(l: list, n: str, d: str, p: int, t_q: int, t: str) -> bool:
+    try:
+        nova_missao = {
+            "nome": n,
+            "dificuldade": d,
+            "pts": p,
+            "tempo_qtd": t_q,
+            "tempo": t
         }
-    )
-    return True
+        l.append(nova_missao)
+    except Exception as err:
+        print(f"Ops, erro ao tentar criar a missão: {err}")
+        return False
+    else:
+        return True
+    finally:
+        print("Registro finalizado.")
 
 # missoes.pegar()
 # Função que busca uma missão na lista pelo nome
-# param: missao_nome Nome da missão
+# param: l Lista de missões
+# param: n Nome da missão
 # return: Retorna o dicionário da missão ou None se não encontrar
-def pegar(missao_nome: str) -> dict | None:
-    for missao in lista_de_missoes:
-        if missao.get("nome") == missao_nome:
-            return missao
+def pegar(l: list, n: str) -> dict | None:
+    try:
+        for m in l:
+            if m.get("nome") == n:
+                return m
+    except Exception as err:
+        print(f"Erro ao procurar essa missão: {err}")
+    finally:
+        print("Busca finalizada.")
     return None
 
 # missoes.remover()
-# Função que remove uma missão da lista global
-# param: missao_nome Nome da missão a ser removida
-# return Retorna True se for removida com sucesso, False caso contrário
-def remover(missao_nome: str) -> bool:
-    for num, missao in enumerate(lista_de_missoes):
-        if missao.get("nome") == missao_nome:
-            lista_de_missoes.pop(num)
-            return True
-    return False
+# Função que remove uma missão da lista
+# param: l Lista de missões
+# param: n Nome da missão a ser removida
+# return: Retorna True se for removida com sucesso, False caso contrário
+def remover(l: list, n: str) -> bool:
+    sucesso = False
+    try:
+        for num, m in enumerate(l):
+            if m.get("nome") == n:
+                l.pop(num)
+                sucesso = True
+                break
+    except Exception as err:
+        print(f"Não deu para apagar a missão: {err}")
+        return False
+    else:
+        return sucesso
+    finally:
+        print("Remoção finalizada.")
 
 # missoes.atualizar()
 # Função que edita um campo específico de uma missão selecionada
-# param: missao Dicionário contendo os dados da missão
-# param: opcao. Opção de campo para edição
+# param: m Dicionário contendo os dados da missão
+# param: op Opção de campo para edição
+# param: l Lista de missões
 # return: Retorna True em sucesso de alteração, False em insucesso
-def atualizar(missao: dict, opcao: str) -> bool:
-    match opcao:
-        case "1":
-            novo_nome = input("NOVO NOME DA MISSÃO: ").strip().upper()
-            if novo_nome == "":
-                print("ERRO! O NOME NÃO PODE FICAR VAZIO!")
-                return False
-            if pegar(novo_nome) is not None and novo_nome != missao["nome"]:
-                print("ERRO! ESSA MISSÃO JÁ EXISTE!")
-                return False
-            missao["nome"] = novo_nome
-
-        case "2":
-            menu.desenhar("Dificuldade da missao")
-            escolha = input("Escolha: ")
-            match escolha:
-                case "1":
-                    missao["dificuldade"] = "FÁCIL"
-                case "2":
-                    missao["dificuldade"] = "MÉDIO"
-                case "3":
-                    missao["dificuldade"] = "DIFÍCIL"
-                case "4":
-                    missao["dificuldade"] = "ESPECIAL"
-                case _:
-                    print("ERRO! OPÇÃO INVÁLIDA!")
+def atualizar(m: dict, op: str, l: list) -> bool:
+    alterado = False
+    try:
+        match op:
+            case "1":
+                novo_nome = input("NOVO NOME DA MISSÃO: ").strip().upper()
+                if novo_nome == "":
+                    print("ERRO! O NOME NÃO PODE FICAR VAZIO!")
                     return False
-
-        case "3":
-            while True:
-                pts = entrada.inteiro("NOVOS PONTOS: ")
-                if pts < 0:
-                    print("ERRO! OS PONTOS NÃO PODEM SER NEGATIVOS!")
-                else:
-                    missao["pts"] = pts
-                    break
-
-        case "4":
-            while True:
-                tempo_qtd = entrada.inteiro("NOVA QUANTIDADE DE TEMPO: ")
-                if tempo_qtd <= 0:
-                    print("ERRO! A QUANTIDADE DE TEMPO DEVE SER MAIOR QUE ZERO!")
-                else:
-                    missao["tempo_qtd"] = tempo_qtd
-                    break
-
-        case "5":
-            menu.desenhar("Tipo de tempo")
-            escolha = input("Escolha: ")
-            match escolha:
-                case "1":
-                    missao["tempo"] = "DIA"
-                case "2":
-                    missao["tempo"] = "SEMANA"
-                case "3":
-                    missao["tempo"] = "MÊS"
-                case _:
-                    print("ERRO! OPÇÃO INVÁLIDA!")
+                if pegar(l, novo_nome) is not None and novo_nome != m["nome"]:
+                    print("ERRO! ESSA MISSÃO JÁ EXISTE!")
                     return False
+                m["nome"] = novo_nome
+                alterado = True
 
-        case _:
-            return False
+            case "2":
+                menu.desenhar("Dificuldade da missao")
+                escolha = input("Escolha: ")
+                match escolha:
+                    case "1":
+                        m["dificuldade"] = "FÁCIL"
+                        alterado = True
+                    case "2":
+                        m["dificuldade"] = "MÉDIO"
+                        alterado = True
+                    case "3":
+                        m["dificuldade"] = "DIFÍCIL"
+                        alterado = True
+                    case "4":
+                        m["dificuldade"] = "ESPECIAL"
+                        alterado = True
+                    case _:
+                        print("ERRO! OPÇÃO INVÁLIDA!")
+                        return False
 
-    return True
+            case "3":
+                while True:
+                    pts = entrada.inteiro("NOVOS PONTOS: ")
+                    if pts < 0:
+                        print("ERRO! OS PONTOS NÃO PODEM SER NEGATIVOS!")
+                    else:
+                        m["pts"] = pts
+                        alterado = True
+                        break
+
+            case "4":
+                while True:
+                    tempo_qtd = entrada.inteiro("NOVA QUANTIDADE DE TEMPO: ")
+                    if tempo_qtd <= 0:
+                        print("ERRO! A QUANTIDADE DE TEMPO DEVE SER MAIOR QUE ZERO!")
+                    else:
+                        m["tempo_qtd"] = tempo_qtd
+                        alterado = True
+                        break
+
+            case "5":
+                menu.desenhar("Tipo de tempo")
+                escolha = input("Escolha: ")
+                match escolha:
+                    case "1":
+                        m["tempo"] = "DIA"
+                        alterado = True
+                    case "2":
+                        m["tempo"] = "SEMANA"
+                        alterado = True
+                    case "3":
+                        m["tempo"] = "MÊS"
+                        alterado = True
+                    case _:
+                        print("ERRO! OPÇÃO INVÁLIDA!")
+                        return False
+
+            case _:
+                return False
+    except Exception as err:
+        print(f"Erro ao mudar os dados da missão: {err}")
+        return False
+    else:
+        return alterado
+    finally:
+        print("Edição finalizada.")
 
 # -------------------- TELAS E PROCEDIMENTOS DE GERENCIAMENTO --------------------
 
 # missoes.criando()
 # Procedimento de interface para cadastro de novas missões
+# param: l Lista de missões
 # return: Não retorna nada
-def criando() -> None:
+def criando(l: list) -> None:
     desenho.limpar()
     desenho.linha()
     print()
@@ -175,7 +216,7 @@ def criando() -> None:
         nome = input("NOME DA MISSÃO: ").strip().upper()
         if nome == "":
             print("ERRO! O NOME NÃO PODE FICAR VAZIO!")
-        elif pegar(nome) is not None:
+        elif pegar(l, nome) is not None:
             print("ERRO! ESSA MISSÃO JÁ EXISTE!")
         else:
             break
@@ -229,34 +270,35 @@ def criando() -> None:
         else:
             break
 
-    adicionar(nome, dificuldade, pts, tempo_qtd, tempo)
-    print(f"MISSÃO {nome} CRIADA!")
+    if adicionar(l, nome, dificuldade, pts, tempo_qtd, tempo):
+        print(f"MISSÃO {nome} CRIADA!")
     desenho.espera_entrada()
 
 # missoes.atualizando()
 # Procedimento de interface para seleção e edição de missões
+# param: l Lista de missões
 # return: Não retorna nada
-def atualizando() -> None:
+def atualizando(l: list) -> None:
     desenho.limpar()
     desenho.linha()
     print()
     desenho.titulo("EDITANDO MISSÕES")
     print()
 
-    if len(lista_de_missoes) == 0:
+    if len(l) == 0:
         print("NENHUMA MISSÃO FOI CRIADA!")
         desenho.espera_entrada()
         return
 
-    for num, missao in enumerate(lista_de_missoes):
-        print(f"  {num + 1}. {missao['nome']}")
+    for num, m in enumerate(l):
+        print(f"  {num + 1}. {m['nome']}")
 
     print()
 
     while True:
         escolha = entrada.inteiro("QUAL MISSÃO DESEJA EDITAR: ")
-        if 1 <= escolha <= len(lista_de_missoes):
-            missao = lista_de_missoes[escolha - 1]
+        if 1 <= escolha <= len(l):
+            missao = l[escolha - 1]
             break
         print("ERRO! ESSA OPÇÃO NÃO EXISTE!")
 
@@ -273,7 +315,7 @@ def atualizando() -> None:
         if escolha == "6":
             break
 
-        resultado = atualizar(missao, escolha)
+        resultado = atualizar(missao, escolha, l)
         if resultado:
             print("MISSÃO ATUALIZADA!")
 
@@ -283,35 +325,36 @@ def atualizando() -> None:
 
 # missoes.excluindo()
 # Procedimento de interface para exclusão de missões
-# return: Não retorna nada.
-def excluindo() -> None:
+# param: l Lista de missões
+# return: Não retorna nada
+def excluindo(l: list) -> None:
     desenho.limpar()
     desenho.linha()
     print()
     desenho.titulo("EXCLUINDO MISSÃO")
 
-    if len(lista_de_missoes) == 0:
+    if len(l) == 0:
         print("\nNENHUMA MISSÃO CADASTRADA!")
         desenho.espera_entrada()
         return
 
     print()
-    for num, missao in enumerate(lista_de_missoes):
-        print(f"  {num + 1}. {missao['nome']}")
+    for num, m in enumerate(l):
+        print(f"  {num + 1}. {m['nome']}")
 
     print()
 
     while True:
         escolha = entrada.inteiro("QUAL MISSÃO DESEJA EXCLUIR: ")
-        if 1 <= escolha <= len(lista_de_missoes):
-            missao = lista_de_missoes[escolha - 1]
+        if 1 <= escolha <= len(l):
+            missao = l[escolha - 1]
 
             print(f"\nMISSÃO SELECIONADA: {missao['nome']}")
             confirmar = input("DESEJA REALMENTE EXCLUIR? (S/N): ").upper().strip()
 
             if confirmar == "S":
-                remover(missao["nome"])
-                print(f"MISSÃO {missao['nome']} EXCLUÍDA!")
+                if remover(l, missao["nome"]):
+                    print(f"MISSÃO {missao['nome']} EXCLUÍDA!")
                 break
             elif confirmar == "N":
                 print("EXCLUSÃO CANCELADA!")
@@ -325,18 +368,19 @@ def excluindo() -> None:
 
 # missoes.listar()
 # Procedimento que desenha a tabela formatada com todas as missões
+# param: l Lista de missões
 # return: Não retorna nada
-def listar() -> None:
+def listar(l: list) -> None:
     desenho.limpar()
     desenho.titulo("MISSÕES")
     
-    if len(lista_de_missoes) == 0:
+    if len(l) == 0:
         print("NENHUMA MISSÃO FOI CRIADA!")
     else:
-        for num, missao in enumerate(lista_de_missoes, start=1):
-            pts_str = f"{missao['pts']} PTS"
-            tempo_str = f"{missao['tempo_qtd']}X/{missao['tempo']}"
-            print(f"{num:<2} | {missao['nome']:26} | {missao['dificuldade']:8} | {pts_str:7} | {tempo_str}")
+        for num, m in enumerate(l, start=1):
+            pts_str = f"{m['pts']} PTS"
+            tempo_str = f"{m['tempo_qtd']}X/{m['tempo']}"
+            print(f"{num:<2} | {m['nome']:26} | {m['dificuldade']:8} | {pts_str:7} | {tempo_str}")
 
     desenho.linha()
     desenho.espera_entrada()

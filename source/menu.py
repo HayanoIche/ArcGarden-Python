@@ -19,17 +19,27 @@ from bibliotecas import arquivos
 
 # -------------------- DESENHOS NO GERAL --------------------
 
+# menu.desenhar_logo()
+# Procedimento que exibe o logo da aplicação e o grupo
+# return: Não retorna nada
 def desenhar_logo() -> None:
     print(arquivos.pegar_conteudo("./textos/logo.txt"))
     print("                                                - ARCEUS")
 
+# menu.desenhar_creditos()
+# Procedimento que exibe os créditos do projeto
+# return: Não retorna nada
 def desenhar_creditos() -> None:
     print(arquivos.pegar_conteudo("./textos/creditos.txt"))
 
 # -------------------- DESENHOS DOS MENUS --------------------
 
-def desenhar(index: str) -> None:
-    match index:
+# menu.desenhar()
+# Procedimento de roteamento para desenho dinâmico dos menus do sistema
+# param: i Nome/Chave do menu a ser renderizado
+# return: Não retorna nada
+def desenhar(i: str) -> None:
+    match i:
         # Menu de escolher se vai jogar ou gerenciar
         case "Inicial":
             desenho.limpar()
@@ -37,7 +47,7 @@ def desenhar(index: str) -> None:
             desenhar_logo()
             desenho.linha()
             desenho.menu(
-                ["Jogar","Gerenciar Sistema", "Créditos"],
+                ["Jogar", "Gerenciar Sistema", "Créditos"],
                 descricao="Escolha o que deseja fazer:",
                 sair=True
             )
@@ -110,8 +120,6 @@ def desenhar(index: str) -> None:
             desenho.linha()
             print()
 
-            
-
         # Menu de resetar o jogador
         case "Gerenciar Resetar Jogador":
             desenho.limpar()
@@ -130,7 +138,6 @@ def desenhar(index: str) -> None:
             )
             desenho.linha()
             print()
-
 
         # Menu para mostrar os possiveis tipos de planta
         case "Tipo da planta":
@@ -157,6 +164,7 @@ def desenhar(index: str) -> None:
                 descricao="O QUE DESEJA ALTERAR: ",
                 sair=False
             )
+
         # Menu para mostrar as dificuldades possiveis das missões 
         case "Dificuldade da missao":
             desenho.menu(
@@ -229,15 +237,15 @@ def desenhar(index: str) -> None:
 
         case "Adicionar Planta":
             desenho.menu(
-        [
-            "PLANTA COMUM",
-            "PLANTA RARA",
-            "PLANTA ULTRA RARA",
-            "VOLTAR"
-        ],
-        descricao="Coloque plantas no pacote: ",
-        sair=False
-    )
+                [
+                    "PLANTA COMUM",
+                    "PLANTA RARA",
+                    "PLANTA ULTRA RARA",
+                    "VOLTAR"
+                ],
+                descricao="Coloque plantas no pacote: ",
+                sair=False
+            )
 
         case "Jogador":
             desenho.limpar()
