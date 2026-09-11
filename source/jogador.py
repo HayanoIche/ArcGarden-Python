@@ -7,22 +7,19 @@
 # |                                                 
 # | ------------------------------------------------
  
-# |  Arquivo auxiliar com as funções das missões
 
-# -------------------- BIBLIOTECAS --------------------
-
-# -------------------- FUNÇÕES --------------------
-
+# jogador.zerar_jogador()
+# Função para resetar o jogador
+# return: Retorna um dicionário com os atributos zerados do jogador
 def zerar_jogador() -> dict:
     return {
-        "inicializado": False,
-        
-        "username": "",
-        "nome jardim": "",
-        "arc score": 0,
-        "plantas": list()
+        "inicializado": False,    
+        "username": "",            
+        "nome_jardim": "",         
+        "arc_score": 0,            
+        "arc_score_total": 0,      
+        "plantas": list(),        
+        "missoes_feitas": dict()   
     }
-
-# -------------------- VARIÁVEIS --------------------
 
 atributos = zerar_jogador()

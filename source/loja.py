@@ -11,13 +11,36 @@
 
 # -------------------- BIBLIOTECAS --------------------
 import plantas, menu
-from bibliotecas import desenho
-# -------------------- VARIÁVEIS DAS LOJA --------------------
-lista_de_pacotes = list()
-# -------------------- FUNÇÕES --------------------
+from bibliotecas import desenho, entrada
 
+# -------------------- VARIÁVEIS DA LOJA --------------------
+
+# Lista pré pronta com pacotes e plantas adicionadas nos pacotes
+lista_de_pacotes = [
+    {
+        "nome": "PACOTE INICIANTE",
+        "preco": 20,
+        "plantas_comuns": [plantas.lista_de_tipos_plantas[0], plantas.lista_de_tipos_plantas[1]],
+        "plantas_raras": [],
+        "plantas_ultra_raras": []
+    },
+    {
+        "nome": "PACOTE RARO",
+        "preco": 75,
+        "plantas_comuns": [],
+        "plantas_raras": [plantas.lista_de_tipos_plantas[2]],
+        "plantas_ultra_raras": []
+    }
+]
+
+# -------------------- FUNÇÕES DE CRUD --------------------
+
+# loja.adicionar()
+# Procedimento que cadastra um novo pacote na lista de pacotes da loja
+# param: pacote_nome Nome do pacote
+# param: pacote_preco Custo em Arc-Score
+# return: Retorna True após cadastrar
 def adicionar(pacote_nome: str, pacote_preco: int) -> bool:
-
     lista_de_pacotes.append(
         {
             "nome": pacote_nome,
@@ -27,125 +50,122 @@ def adicionar(pacote_nome: str, pacote_preco: int) -> bool:
             "plantas_ultra_raras": list()
         }
     )
-
     return True
 
+# loja.pegar()
+# Função que busca um pacote na lista pelo seu nome
+# param pacote_nome: Nome do pacote
+# return: Retorna o dicionário do pacote ou None se não encontrar nada
 def pegar(pacote_nome: str) -> dict | None:
     for pacote in lista_de_pacotes:
         if pacote.get("nome") == pacote_nome:
             return pacote
-
     return None
 
-
+# loja.remover()
+# Função que deleta um pacote da loja pelo nome
+# param pacote_nome: Nome do pacote a remover
+# return: Retorna True se remover, False caso contrário
 def remover(pacote_nome: str) -> bool:
     for num, pacote in enumerate(lista_de_pacotes):
         if pacote.get("nome") == pacote_nome:
             lista_de_pacotes.pop(num)
             return True
-
     return False
 
+# -------------------- GERENCIAMENTO DE CONTEÚDO DOS PACOTES --------------------
+
+# loja.adicionar_planta()
+# Procedimento que vincula um TipoPlanta a um pacote filtrando pela categoria
+# param pacote: Dicionário do pacote a ser modificado
+# param categoria: Categoria da planta (COMUM, RARO, ULTRA RARO)
+# return: Não retorna nada
+def adicionar_planta(pacote: dict, categoria: str) -> None:
+    plantas_disponiveis = list()
+
+    for p in plantas.lista_de_tipos_plantas:
+        if p["categoria"] == categoria:
+            plantas_disponiveis.append(p)
+
+    if len(plantas_disponiveis) == 0:
+        print("NENHUM TIPO DE PLANTA DESSA CATEGORIA FOI CADASTRADO!")
+        return
+
+    print(f"PLANTAS {categoria}:")
+    for num, p in enumerate(plantas_disponiveis):
+        print(f"{num + 1} - {p['nome']}")
+
+    escolha = entrada.inteiro("Escolha a planta: ")
+    if escolha < 1 or escolha > len(plantas_disponiveis):
+        print("ERRO! OPÇÃO INVÁLIDA!")
+        return
+
+    planta_escolhida = plantas_disponiveis[escolha - 1]
+
+    match categoria:
+        case "COMUM":
+            lista = pacote["plantas_comuns"]
+        case "RARO":
+            lista = pacote["plantas_raras"]
+        case "ULTRA RARO":
+            lista = pacote["plantas_ultra_raras"]
+
+    if planta_escolhida in lista:
+        print("ERRO! ESSA PLANTA JÁ ESTÁ NO PACOTE!")
+        return
+
+    lista.append(planta_escolhida)
+    print(f"PLANTA {planta_escolhida['nome']} ADICIONADA!")
+
+# -------------------- TELAS E PROCEDIMENTOS DE GERENCIAMENTO --------------------
+
+# loja.criando()
+# Procedimento de interface para criação interativa de pacotes na loja
+# return: Não retorna nada
 def criando() -> None:
     while True:
         desenho.limpar()
-        nome = input("NOME DO PACOTE: ")
+        nome = input("NOME DO PACOTE: ").strip().upper()
 
         if nome == "":
             print("ERRO! O NOME DO PACOTE NÃO PODE FICAR VAZIO!")
-
-        elif pegar(nome) != None:
+        elif pegar(nome) is not None:
             print("ERRO! ESSE PACOTE JÁ EXISTE!")
-
         else:
             break
 
     while True:
-        try:
-            preco = int(input("PREÇO DO PACOTE: "))
-
-            if preco < 0:
-                print("ERRO! O PREÇO NÃO PODE SER NEGATIVO!")
-            else:
-                break
-
-        except ValueError:
-            print("ERRO! O PREÇO DEVE SER UM NÚMERO INTEIRO!")
+        preco = entrada.inteiro("PREÇO DO PACOTE: ")
+        if preco < 0:
+            print("ERRO! O PREÇO NÃO PODE SER NEGATIVO!")
+        else:
+            break
 
     adicionar(nome, preco)
-
     pacote = pegar(nome)
 
     while True:
         print()
         menu.desenhar("Adicionar Planta")
-
         escolha = input("Escolha: ")
 
         match escolha:
             case "1":
                 adicionar_planta(pacote, "COMUM")
-
             case "2":
                 adicionar_planta(pacote, "RARO")
-
             case "3":
                 adicionar_planta(pacote, "ULTRA RARO")
-
             case "4":
                 break
-
             case _:
                 print("ERRO! OPÇÃO INVÁLIDA!")
 
     print(f"PACOTE {nome} CRIADO!")
 
-def adicionar_planta(pacote: dict, tipo: str) -> None:
-    plantas_disponiveis = list()
-
-    for planta in plantas.lista_de_plantas:
-        if planta["tipo"] == tipo:
-            plantas_disponiveis.append(planta)
-
-    if len(plantas_disponiveis) == 0:
-        print("NENHUMA PLANTA DESSE TIPO FOI CADASTRADA!")
-        return
-
-    print(f"PLANTAS {tipo}:")
-    
-    for num, planta in enumerate(plantas_disponiveis):
-        print(f"{num + 1} - {planta['nome']}")
-
-    try:
-        escolha = int(input("Escolha a planta: "))
-
-        if escolha < 1 or escolha > len(plantas_disponiveis):
-            print("ERRO! OPÇÃO INVÁLIDA!")
-            return
-
-        planta_escolhida = plantas_disponiveis[escolha - 1]
-
-        match tipo:
-            case "COMUM":
-                lista = pacote["plantas_comuns"]
-
-            case "RARO":
-                lista = pacote["plantas_raras"]
-
-            case "ULTRA RARO":
-                lista = pacote["plantas_ultra_raras"]
-
-        if planta_escolhida in lista:
-            print("ERRO! ESSA PLANTA JÁ ESTÁ NO PACOTE!")
-            return
-
-        lista.append(planta_escolhida)
-
-        print(f"PLANTA {planta_escolhida['nome']} ADICIONADA!")
-
-    except ValueError:
-        print("ERRO! DIGITE UM NÚMERO!")
-
+# loja.listar()
+# Procedimento que lista na tela todos os pacotes e suas respectivas plantas
+# return: Não retorna nada
 def listar() -> None:
     print()
     desenho.linha()
@@ -162,21 +182,24 @@ def listar() -> None:
             print(f"PREÇO.......: {pacote['preco']}")
 
             print("PLANTAS COMUNS:")
-            for planta in pacote["plantas_comuns"]:
-                print(f"- {planta['nome']}")
+            for p in pacote["plantas_comuns"]:
+                print(f"- {p['nome']}")
 
             print("PLANTAS RARAS:")
-            for planta in pacote["plantas_raras"]:
-                print(f"- {planta['nome']}")
+            for p in pacote["plantas_raras"]:
+                print(f"- {p['nome']}")
 
             print("PLANTAS ULTRA RARAS:")
-            for planta in pacote["plantas_ultra_raras"]:
-                print(f"- {planta['nome']}")
+            for p in pacote["plantas_ultra_raras"]:
+                print(f"- {p['nome']}")
 
             desenho.linha()
+            
     desenho.espera_entrada()
-    
 
+# loja.excluindo()
+# Procedimento de interface para exclusão de um pacote da loja
+# return: Não retorna nada
 def excluindo() -> None:
     if len(lista_de_pacotes) == 0:
         print("NENHUM PACOTE FOI CRIADO!")
@@ -189,41 +212,37 @@ def excluindo() -> None:
     for num, pacote in enumerate(lista_de_pacotes):
         print(f"{num + 1} - {pacote['nome']}")
 
-    try:
-        escolha = int(input("Escolha o pacote: "))
+    escolha = entrada.inteiro("Escolha o pacote: ")
+    if escolha < 1 or escolha > len(lista_de_pacotes):
+        print("ERRO! OPÇÃO INVÁLIDA!")
+        return
 
-        if escolha < 1 or escolha > len(lista_de_pacotes):
-            print("ERRO! OPÇÃO INVÁLIDA!")
-            return
+    pacote = lista_de_pacotes[escolha - 1]
+    confirmacao = input(f"DESEJA REALMENTE EXCLUIR O PACOTE {pacote['nome']}? (S/N): ").upper().strip()
 
-        pacote = lista_de_pacotes[escolha - 1]
-
-        confirmacao = input(f"DESEJA REALMENTE EXCLUIR O PACOTE {pacote['nome']}? (S/N): ").upper()
-
-        if confirmacao == "S":
-            remover(pacote["nome"])
-            print("PACOTE EXCLUÍDO COM SUCESSO!")
-
-        elif confirmacao == "N":
-            print("EXCLUSÃO CANCELADA!")
-
-        else:
-            print("ERRO! OPÇÃO INVÁLIDA!")
-
-    except ValueError:
-        print("ERRO! DIGITE UM NÚMERO!")
+    if confirmacao == "S":
+        remover(pacote["nome"])
+        print("PACOTE EXCLUÍDO COM SUCESSO!")
+    elif confirmacao == "N":
+        print("EXCLUSÃO CANCELADA!")
+    else:
+        print("ERRO! OPÇÃO INVÁLIDA!")
 
     desenho.espera_entrada()
 
+# loja.atualizar()
+# Função que edita um atributo do pacote selecionado
+# param pacote: Dicionário do pacote a ser editado
+# param opcao: Opção selecionada no menu de edição
+# return: Retorna True se for atualizado com sucesso, False em erro
 def atualizar(pacote: dict, opcao: str) -> bool:
     match opcao:
         case "1":
             while True:
-                novo_nome = input("NOVO NOME DO PACOTE: ")
-
+                novo_nome = input("NOVO NOME DO PACOTE: ").strip().upper()
                 if novo_nome == "":
                     print("ERRO! O NOME DO PACOTE NÃO PODE FICAR VAZIO!")
-                elif novo_nome != pacote["nome"] and pegar(novo_nome) != None:
+                elif novo_nome != pacote["nome"] and pegar(novo_nome) is not None:
                     print("ERRO! ESSE PACOTE JÁ EXISTE!")
                 else:
                     pacote["nome"] = novo_nome
@@ -231,23 +250,17 @@ def atualizar(pacote: dict, opcao: str) -> bool:
 
         case "2":
             while True:
-                try:
-                    novo_preco = int(input("NOVO PREÇO DO PACOTE: "))
-
-                    if novo_preco < 0:
-                        print("ERRO! O PREÇO NÃO PODE SER NEGATIVO!")
-                    else:
-                        pacote["preco"] = novo_preco
-                        break
-
-                except ValueError:
-                    print("ERRO! O PREÇO DEVE SER UM NÚMERO INTEIRO!")
+                novo_preco = entrada.inteiro("NOVO PREÇO DO PACOTE: ")
+                if novo_preco < 0:
+                    print("ERRO! O PREÇO NÃO PODE SER NEGATIVO!")
+                else:
+                    pacote["preco"] = novo_preco
+                    break
 
         case "3":
             while True:
                 menu.desenhar("Adicionar Planta")
                 escolha = input("Escolha: ")
-
                 match escolha:
                     case "1":
                         adicionar_planta(pacote, "COMUM")
@@ -272,35 +285,33 @@ def atualizar(pacote: dict, opcao: str) -> bool:
                 print("NENHUMA PLANTA FOI ADICIONADA AO PACOTE!")
                 return False
 
-            for num, planta in enumerate(plantas_do_pacote):
-                print(f"{num + 1} - {planta['nome']}")
+            for num, p in enumerate(plantas_do_pacote):
+                print(f"{num + 1} - {p['nome']}")
 
-            try:
-                escolha = int(input("Escolha a planta que deseja remover: "))
+            escolha = entrada.inteiro("Escolha a planta que deseja remover: ")
+            if escolha < 1 or escolha > len(plantas_do_pacote):
+                print("ERRO! OPÇÃO INVÁLIDA!")
+                return False
 
-                if escolha < 1 or escolha > len(plantas_do_pacote):
-                    print("ERRO! OPÇÃO INVÁLIDA!")
-                    return False
+            planta_sel = plantas_do_pacote[escolha - 1]
 
-                planta = plantas_do_pacote[escolha - 1]
+            if planta_sel in pacote["plantas_comuns"]:
+                pacote["plantas_comuns"].remove(planta_sel)
+            elif planta_sel in pacote["plantas_raras"]:
+                pacote["plantas_raras"].remove(planta_sel)
+            else:
+                pacote["plantas_ultra_raras"].remove(planta_sel)
 
-                if planta in pacote["plantas_comuns"]:
-                    pacote["plantas_comuns"].remove(planta)
-                elif planta in pacote["plantas_raras"]:
-                    pacote["plantas_raras"].remove(planta)
-                else:
-                    pacote["plantas_ultra_raras"].remove(planta)
-
-                print("PLANTA REMOVIDA DO PACOTE!")
-
-            except ValueError:
-                print("ERRO! DIGITE UM NÚMERO!")
+            print("PLANTA REMOVIDA DO PACOTE!")
 
         case _:
             return False
 
     return True
 
+# loja.atualizando()
+# Procedimento de interface para alteração de pacotes
+# return: Não retorna nada
 def atualizando() -> None:
     desenho.limpar()
     desenho.linha()
@@ -315,22 +326,14 @@ def atualizando() -> None:
         return
 
     desenho.linha()
-
     for num, pacote in enumerate(lista_de_pacotes):
         print(f"{num + 1} - {pacote['nome']}")
 
     print()
+    escolha = entrada.inteiro("Escolha o pacote: ")
 
-    try:
-        escolha = int(input("Escolha o pacote: "))
-
-        if escolha < 1 or escolha > len(lista_de_pacotes):
-            print("ERRO! OPÇÃO INVÁLIDA!")
-            desenho.espera_entrada()
-            return
-
-    except ValueError:
-        print("ERRO! DIGITE UM NÚMERO!")
+    if escolha < 1 or escolha > len(lista_de_pacotes):
+        print("ERRO! OPÇÃO INVÁLIDA!")
         desenho.espera_entrada()
         return
 
@@ -345,7 +348,6 @@ def atualizando() -> None:
             break
 
         resultado = atualizar(pacote, escolha)
-
         if resultado:
             print("PACOTE ATUALIZADO!")
 

@@ -144,13 +144,12 @@ def desenhar(index: str) -> None:
                 sair=False
             )
 
-        # Menu para mostrar as opçoes de edição das plantas
+        # Menu para mostrar as opções de edição das plantas
         case "Editando planta":  
             desenho.menu(
                 [
                     "NOME",
-                    "TIPO",
-                    "XP ATUAL",
+                    "CATEGORIA",
                     "XP MÁXIMO",
                     "DESCRIÇÃO",
                     "VOLTAR"
@@ -240,3 +239,25 @@ def desenhar(index: str) -> None:
         sair=False
     )
 
+        case "Jogador":
+            desenho.limpar()
+            desenho.linha()
+            desenhar_logo()
+            desenho.linha()
+            print()
+            desenho.titulo("MODO JOGO")
+            desenho.menu(
+                [
+                    "Ver Missões",
+                    "Simular Missões",
+                    "Ver Arc-Score",
+                    "Gerenciar Jardim",
+                    "Abrir Pacote",
+                    "Ver Ranking",
+                    "Voltar"
+                ],
+                descricao="Escolha uma opção:",
+                sair=False
+            )
+            desenho.linha()
+            print()

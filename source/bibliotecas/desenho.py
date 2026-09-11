@@ -24,16 +24,16 @@ TAMANHO_LINHA_PADRAO = 58
 
 # desenho.linha()
 # Procedimento que desenha uma linha no terminal
-# :param tam: Define o tamanho que a linha vai ser, por padrão 80 chars.
-# :return: Não retorna nada.
+# param tam: Define o tamanho que a linha vai ser, por padrão 80 cacacteres.
+# return: Não retorna nada
 def linha(tam: int = TAMANHO_LINHA_PADRAO) -> None:
     print("-" * tam)
 
 # desenho.titulo()
 # Procedimento que desenha um titulo formatado
-# :param titulo: É basicamente o texto que fica no título.
-# :param tam: Define o tamanho que o titulo vai ser, por padrão 80 chars.
-# :return: Não retorna nada.
+# param titulo: É basicamente o texto que fica no título
+# param tam: Define o tamanho que o titulo vai ser, por padrão 80 caracteres
+# return: Não retorna nada
 def titulo(titulo: str, descricao: str = "", separado: bool = False,  tam: int = TAMANHO_LINHA_PADRAO) -> None:
     linha(tam)
     
@@ -48,12 +48,12 @@ def titulo(titulo: str, descricao: str = "", separado: bool = False,  tam: int =
     linha(tam)
     
 # desenho.menu()
-# Procedimento que desenha um menu com indices (1 - tal tal tal...)
-# :param opcoes: Uma lista com as opções a serem desenhadas.
-# :param descricao: Uma descrição a ser desenhada em cima do menu.
-# :param sair: se vai ter a opção 0 de sair no menu.
-# :param espacamento: espaçamento entre as opções e o inicio da linha.
-# :return: Não retorna nada.
+# Procedimento que desenha um menu com indices (1 - tal tal tal)
+# param opcoes: Uma lista com as opções a serem desenhadas
+# param descricao: Uma descrição a ser desenhada em cima do menu
+# param sair: se vai ter a opção 0 de sair no menu
+# param espacamento: espaçamento entre as opções e o inicio da linha
+# return: Não retorna nada
 def menu(opcoes: list,
          descricao: str = "",
          sair: bool = False,
@@ -77,24 +77,24 @@ def menu(opcoes: list,
 
 # desenho.limpar()
 # Procedimento que limpa o texto do terminal
-# :return: Não retorna nada.
+# return: Não retorna nada
 def limpar() -> None:
-    if (os.name == "nt"): # se for o windows
+    if (os.name == "nt"): 
         os.system("cls")
     else:
         os.system("clear")
 
 # desenho.espera_entrada()
 # Procedimento que faz o terminal esperar uma entrada
-# :return: Não retorna nada.
+# return: Não retorna nada
 def espera_entrada() -> None:
     print("")
     input("PRESSIONE [ENTER] PARA CONTINUAR. . .")
 
 # desenho.separar()
 # Procedimento que pega um texto e retorna ele só que separado por cada caractere com " ".
-# :param texto: É o texto a ser separado
-# :return: Retorna o texto separado por espaços.
+# param texto: É o texto a ser separado
+# return: Retorna o texto separado por espaços
 def separar(texto: str) -> str:
     texto_formatado = ""
     

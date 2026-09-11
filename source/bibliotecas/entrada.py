@@ -15,36 +15,30 @@ import sys
 
 # entrada.real()
 # Função que pega um input do tipo float do usuário de forma segura
-# :param msg: É a mensagem que vai ser exibida pro usuário
-# :return: Retorna o valor real pego no input.
 def real(msg: str) -> float:
-    valor = ""
-
-    while type(valor) != float:
+    while True:
         try:
             print(msg, end="")
             valor = float(input())
+            return valor
         except ValueError:
-            print("Erro! Valor digitado não é um número válido")
+            print("Erro! Valor digitado não é um número válido.")
         except KeyboardInterrupt:
             sys.exit()
-        except:
-            print("Erro não indentificado!")
+        except Exception:
+            print("Erro não identificado!")
 
 # entrada.inteiro()
 # Função que pega um input do tipo integer do usuário de forma segura
-# :param msg: É a mensagem que vai ser exibida pro usuário
-# :return: Retorna o valor inteiro pego no input.
 def inteiro(msg: str) -> int:
-    valor = ""
-    
-    while type(valor) != int:
+    while True:
         try:
             print(msg, end="")
             valor = int(input())
+            return valor
         except ValueError:
-            print("Erro! Valor digitado não é um número válido")
+            print("Erro! Valor digitado não é um número válido.")
         except KeyboardInterrupt:
-                    sys.exit()
-        except:
-            print("Erro não indentificado!")
+            sys.exit()
+        except Exception:
+            print("Erro não identificado!")
