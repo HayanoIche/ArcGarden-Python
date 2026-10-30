@@ -9,7 +9,7 @@
  
 
 # -------------------- BIBLIOTECAS --------------------
-import menu, plantas, missoes, loja, jogador, jogar
+import menu, plantas, missoes, loja, jogador, jogar, banco
 from bibliotecas import desenho
 
 # -------------------- VARIÁVEIS DO APLICATIVO --------------------
@@ -117,8 +117,10 @@ def rodar_menu_sistema(m: list, p: list, l: list, j: dict) -> None:
         case "3":
             rodar_menu_gerenciar_loja(l, p)
         case "4":
-            rodar_menu_resetar_jogador(j)                        
+            rodar_menu_resetar_jogador(j)
         case "5":
+            rodar_menu_banco() 
+        case "6":
             mudar_modo_execucao("none")
         case _:
             print("ERRO! Opção inválida!")
@@ -220,6 +222,67 @@ def rodar_menu_resetar_jogador(j: dict) -> None:
                     desenho.espera_entrada()
                 break
             case "2":
+                break
+            case _:
+                print("ERRO! Opção inválida!")
+                desenho.espera_entrada()
+
+# aplicativo.rodar_menu_api_java()
+# Procedimento de controle do submenu de consulta à API em Java
+# return: Não retorna nada
+def rodar_menu_api_java() -> None:
+    while True:
+        menu.desenhar("Menu API Java")
+        escolha = input("Escolha: ").strip()
+        
+        match escolha:
+            case "1":
+                banco.consultar_recurso_api("tipos-plantas", "TIPOS DE PLANTAS")
+            case "2":
+                banco.consultar_recurso_api("missoes", "MISSÕES")
+            case "3":
+                banco.consultar_recurso_api("ranking/mensal", "RANKING")
+            case "4":
+                banco.consultar_recurso_api("usuarios", "UTILIZADORES")
+            case "5":
+                banco.consultar_recurso_api("itens-loja", "ITENS DA LOJA")
+            case "6":
+                banco.consultar_recurso_api("jardins", "JARDINS")
+            case "7":
+                break
+            case _:
+                print("ERRO! Opção inválida!")
+                desenho.espera_entrada()
+
+# aplicativo.rodar_menu_banco()
+# Procedimento de controle do menu da base de dados Oracle e integração com API
+# return: Não retorna nada
+def rodar_menu_banco() -> None:
+    conn, sucesso = banco.conectar_bd()
+    if not sucesso:
+        print("\nErro ao conectar ao Oracle da FIAP.")
+        desenho.espera_entrada()
+        return
+
+    while True:
+        menu.desenhar("Banco Oracle")
+        escolha = input("Escolha: ").strip()
+        
+        match escolha:
+            case "1":
+                banco.cadastrar_planta(conn)
+            case "2":
+                banco.listar_plantas(conn)
+            case "3":
+                banco.alterar_planta(conn)
+            case "4":
+                banco.excluir_planta(conn)
+            case "5":
+                banco.exportar_json(conn)
+            case "6":
+                rodar_menu_api_java()
+            case "0":
+                conn.close()
                 break
             case _:
                 print("ERRO! Opção inválida!")

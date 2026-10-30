@@ -54,6 +54,7 @@ def desenhar(i: str) -> None:
             desenho.linha()
             print()
 
+      
         # Menu geral do gerenciador
         case "Gerenciador":
             desenho.limpar()
@@ -68,6 +69,7 @@ def desenhar(i: str) -> None:
                     "Gerenciar Plantas",
                     "Gerenciar Loja",
                     "Resetar Jogador",
+                    "Base de Dados Oracle",
                     "Voltar"
                 ],
                 descricao="Escolha o que deseja fazer:",
@@ -190,6 +192,7 @@ def desenhar(i: str) -> None:
                 sair=False
             )
 
+        # Menu para editar missão
         case "Editando missão":
             desenho.menu(
                 [
@@ -204,6 +207,7 @@ def desenhar(i: str) -> None:
                 sair=False
             )
 
+        # Menu para gerenciar loja
         case "Gerenciar Loja":
             desenho.limpar()
             desenho.linha()
@@ -222,6 +226,7 @@ def desenhar(i: str) -> None:
                 sair=False
             )
 
+        # Menu para editar pacotes da loja
         case "Editando pacote":
             desenho.menu(
                 [
@@ -235,6 +240,7 @@ def desenhar(i: str) -> None:
                 sair=False
             )
 
+        # Menu para adicionar novas plantas
         case "Adicionar Planta":
             desenho.menu(
                 [
@@ -247,6 +253,7 @@ def desenhar(i: str) -> None:
                 sair=False
             )
 
+        # Menu do jogador
         case "Jogador":
             desenho.limpar()
             desenho.linha()
@@ -265,6 +272,53 @@ def desenhar(i: str) -> None:
                     "Voltar"
                 ],
                 descricao="Escolha uma opção:",
+                sair=False
+            )
+            desenho.linha()
+            print()
+
+        # Menu para a Base de Dados Oracle 
+        case "Banco Oracle":
+            desenho.limpar()
+            desenho.linha()
+            desenhar_logo()
+            desenho.linha()
+            print()
+            desenho.titulo("BASE DE DADOS ORACLE")
+            desenho.menu(
+                [
+                    "Cadastrar Planta no BD",
+                    "Listar Plantas do BD",
+                    "Alterar Planta no BD",
+                    "Excluir Planta no BD",
+                    "Exportar Dados para JSON",
+                    "Consultar API ArcGarden"
+                ],
+                descricao="Escolha uma opção:",
+                sair=True
+            )
+            desenho.linha()
+            print()
+
+        # Menu para acessar API do ArcGarden
+        case "Menu API Java":
+            desenho.limpar()
+            desenho.linha()
+            desenhar_logo()
+            desenho.linha()
+            print()
+            desenho.titulo("CONSULTAR API ARC GARDEN")
+            desenho.menu(
+                [
+                    "Consultar Tipos de Plantas",
+                    "Consultar Missões",
+                    "Consultar Ranking",
+                    "Consultar Utilizadores",
+                    "Consultar Itens da Loja",
+                    "Consultar Jardins",
+                    "Voltar"
+                ],
+                descricao="Escolha o recurso da API:",
                 sair=False
             )
             desenho.linha()
