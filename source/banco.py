@@ -7,7 +7,9 @@ from bibliotecas import entrada   # Módulo de inputs seguros que criaram
 # URL base da API em Java alojada no Render
 url_base_api = "https://arcgarden.onrender.com/api/v1"
 
-# CONEXÃO COM O BANCO ORACLE DA FIAP E CRIAÇÃO AUTOMÁTICA DA TABELA
+# banco.conectar_bd()
+# Procedimento para estabelecer ligação com o banco Oracle da FIAP e criar a tabela se necessário
+# return: Retorna uma tupla contendo a conexão e um booleano de sucesso (conn, bool)
 def conectar_bd():
     try:
         conn = oracledb.connect(
@@ -36,13 +38,20 @@ def conectar_bd():
         print("Erro na conexão:", e)
         return None, False
 
-# FUNÇÃO PARA VERIFICAR ID
+# banco.verificar_id_existente()
+# Função para verificar se um ID de planta já existe na base de dados
+# param conn: Objeto de conexão ativo com o Oracle
+# param planta_id: Inteiro representando o ID a ser verificado
+# return: Retorna True se o ID existir, False caso contrário
 def verificar_id_existente(conn, planta_id):
     with conn.cursor() as cur:
         cur.execute(f"SELECT COUNT(*) FROM arcgarden_plantas WHERE id = {planta_id}")
         return cur.fetchone()[0] > 0
 
-# 1. CADASTRAR PLANTA NO ORACLE
+# banco.cadastrar_planta()
+# Procedimento para registar uma nova planta na base de dados Oracle
+# param conn: Objeto de conexão ativo com o Oracle
+# return: Não retorna nada
 def cadastrar_planta(conn):
     desenho.limpar()
     desenho.titulo("CADASTRAR PLANTA", "Registro de nova espécie no ArcGarden")
@@ -73,13 +82,20 @@ def cadastrar_planta(conn):
     
     desenho.espera_entrada()
 
-# BUSCAR DADOS DO ORACLE
+
+# banco.buscar_todas_plantas()
+# Função que consulta e recupera todas as plantas registadas no Oracle
+# param conn: Objeto de conexão ativo com o Oracle
+# return: Retorna uma lista com os registos encontrados
 def buscar_todas_plantas(conn):
     with conn.cursor() as cur:
         cur.execute("SELECT id, nome, tipo, quantidade FROM arcgarden_plantas")
         return cur.fetchall()
 
-# 2. LISTAR PLANTAS DO ORACLE 
+# banco.listar_plantas()
+# Procedimento para exibir na tela todas as plantas cadastradas na base de dados
+# param conn: Objeto de conexão ativo com o Oracle
+# return: Não retorna nada
 def listar_plantas(conn):
     desenho.limpar()
     desenho.titulo("LISTAR PLANTAS", "Consulta em fichas")
@@ -104,7 +120,10 @@ def listar_plantas(conn):
         print(f"Erro ao listar plantas: {e}")
         desenho.espera_entrada()
 
-# 3. ALTERAR PLANTA NO ORACLE
+# banco.alterar_planta()
+# Procedimento para atualizar os dados de uma planta existente no Oracle
+# param conn: Objeto de conexão ativo com o Oracle
+# return: Não retorna nada
 def alterar_planta(conn):
     desenho.limpar()
     desenho.titulo("ALTERAR DADOS DA PLANTA")
@@ -162,7 +181,10 @@ def alterar_planta(conn):
     
     desenho.espera_entrada()
 
-# 4. EXCLUIR PLANTA DO ORACLE
+# banco.excluir_planta()
+# Procedimento para remover uma planta da base de dados através do ID
+# param conn: Objeto de conexão ativo com o Oracle
+# return: Não retorna nada
 def excluir_planta(conn):
     desenho.limpar()
     desenho.titulo("EXCLUIR PLANTA")
@@ -201,7 +223,10 @@ def excluir_planta(conn):
         
     desenho.espera_entrada()
 
-# 5. EXPORTAR DO ORACLE PARA JSON 
+# banco.exportar_json()
+# Procedimento para exportar os dados do Oracle para um arquivo JSON de backup
+# param conn: Objeto de conexão ativo com o Oracle
+# return: Não retorna nada
 def exportar_json(conn):
     desenho.limpar()
     desenho.titulo("EXPORTAR PARA JSON", "Backup de dados em formato JSON")
@@ -219,8 +244,11 @@ def exportar_json(conn):
         
     desenho.espera_entrada()
 
-# 6. API Externa
-# Consulta genérica de qualquer recurso da API em Java
+# banco.consultar_recurso_api()
+# Procedimento para consultar de forma genérica os recursos da API em Java hospedada no Render
+# param recurso: String com o endpoint da API a ser consultado
+# param titulo_menu: String com o título a ser exibido no terminal
+# return: Não retorna nada
 def consultar_recurso_api(recurso: str, titulo_menu: str) -> None:
     desenho.limpar()
     desenho.titulo(titulo_menu, "Dados da API Externa")
