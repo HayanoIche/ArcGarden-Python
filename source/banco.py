@@ -72,15 +72,20 @@ def cadastrar_planta(conn):
     quantidade = entrada.inteiro("    Quantidade.......: ")
     
     try:
-        sql = f"INSERT INTO arcgarden_plantas (nome, tipo, quantidade) VALUES ('{nome}', '{tipo}', {quantidade})"
+        sql = """
+            INSERT INTO arcgarden_plantas (nome, tipo, quantidade)
+            VALUES (:nome, :tipo, :quantidade)
+        """
         with conn.cursor() as cur:
-            cur.execute(sql)
+            cur.execute(sql, {
+                "nome": nome,
+                "tipo": tipo,
+                "quantidade": quantidade
+            })
             conn.commit()
         print("\n    Planta gravada com sucesso na base de dados.")
     except Exception as e:
         print(f"\n    Erro ao cadastrar planta: {e}")
-    
-    desenho.espera_entrada()
 
 
 # banco.buscar_todas_plantas()
