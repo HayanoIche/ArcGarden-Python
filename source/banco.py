@@ -257,7 +257,7 @@ def consultar_recurso_api(recurso: str, titulo_menu: str) -> None:
     url_completa = f"{url_base_api}/{recurso}"
     
     try:
-        resposta = requests.get(url_completa, timeout=5)
+        resposta = requests.get(url_completa, timeout=60)
         if resposta.status_code == 200:
             dados = resposta.json()
             if not dados:
